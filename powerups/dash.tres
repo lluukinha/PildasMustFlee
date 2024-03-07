@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://ioos53twghib"]
+
+[ext_resource type="Script" path="res://powerups/power_up.gd" id="1_7jlhe"]
+[ext_resource type="PackedScene" uid="uid://3ihbmainm3nv" path="res://scenes/controllers/DashPowerUpController.tscn" id="1_qpkeg"]
+
+[resource]
+resource_name = "Dash"
+script = ExtResource("1_7jlhe")
+id = "dash"
+controller = ExtResource("1_qpkeg")

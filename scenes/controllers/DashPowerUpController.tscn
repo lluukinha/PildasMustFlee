@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://3ihbmainm3nv"]
+
+[ext_resource type="Script" path="res://scenes/controllers/DashPowerUpController.gd" id="1_thrqc"]
+
+[node name="DashPowerUpController" type="Node2D" groups=["dash_power_up"]]
+script = ExtResource("1_thrqc")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

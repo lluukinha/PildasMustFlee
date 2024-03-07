@@ -1,0 +1,101 @@
+[gd_scene load_steps=16 format=3 uid="uid://bcjmjkd0qgnok"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_wh2cd"]
+[ext_resource type="Texture2D" uid="uid://6skxsei2jaak" path="res://sprites/walking_player.png" id="2_ya0tt"]
+[ext_resource type="PackedScene" uid="uid://cacv685tn8dx5" path="res://scenes/manager/PowerUpManager.tscn" id="3_l2d8r"]
+[ext_resource type="Resource" uid="uid://j84qv01213ye" path="res://powerups/double_jump.tres" id="4_dcsue"]
+[ext_resource type="PackedScene" uid="uid://g38lucl12bnx" path="res://scenes/components/health_component.tscn" id="5_aj802"]
+[ext_resource type="Resource" uid="uid://ioos53twghib" path="res://powerups/dash.tres" id="5_lqfo4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_imtax"]
+atlas = ExtResource("2_ya0tt")
+region = Rect2(251, 424, 61, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adiei"]
+atlas = ExtResource("2_ya0tt")
+region = Rect2(253, 424, 61, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_538lh"]
+atlas = ExtResource("2_ya0tt")
+region = Rect2(378, 424, 60, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drxbd"]
+atlas = ExtResource("2_ya0tt")
+region = Rect2(314, 424, 61, 106)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3yia7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_imtax")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adiei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_538lh")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drxbd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adiei")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3x2wq"]
+radius = 10.232
+
+[sub_resource type="Animation" id="Animation_xlsby"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_fsco0"]
+resource_name = "punch"
+length = 0.2
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oiwoy"]
+_data = {
+"RESET": SubResource("Animation_xlsby"),
+"punch": SubResource("Animation_fsco0")
+}
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_wh2cd")
+
+[node name="PowerUpManager" parent="." instance=ExtResource("3_l2d8r")]
+unique_name_in_owner = true
+resources = Array[Resource("res://powerups/power_up.gd")]([ExtResource("4_dcsue"), ExtResource("5_lqfo4")])
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_aj802")]
+
+[node name="PowerUpControllers" type="Node2D" parent="." groups=["power_up_controllers"]]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="BodyAnimation" type="AnimatedSprite2D" parent="Visuals"]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_3yia7")
+offset = Vector2(0, -47)
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2(1, -44)
+scale = Vector2(2.23937, 3.99719)
+shape = SubResource("CircleShape2D_3x2wq")
+
+[node name="AttackAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_oiwoy")
+}

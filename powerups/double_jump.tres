@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=2 format=3 uid="uid://j84qv01213ye"]
+
+[ext_resource type="Script" path="res://powerups/power_up.gd" id="1_hn0rl"]
+
+[resource]
+resource_name = "Double Jump"
+script = ExtResource("1_hn0rl")
+id = "double_jump"

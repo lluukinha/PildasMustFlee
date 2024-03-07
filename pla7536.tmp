@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://bcjmjkd0qgnok"]
+
+[ext_resource type="Texture2D" uid="uid://bqw5wv6c6o78k" path="res://braco.png" id="1_uhg08"]
+[ext_resource type="Script" path="res://player.gd" id="1_wh2cd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3x2wq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ykn2"]
+atlas = ExtResource("1_uhg08")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3cf63"]
+atlas = ExtResource("1_uhg08")
+region = Rect2(200, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujily"]
+atlas = ExtResource("1_uhg08")
+region = Rect2(400, 0, 200, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3yia7"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ykn2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3cf63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujily")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_wh2cd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-7, -15)
+scale = Vector2(7.84, 7.76)
+shape = SubResource("CircleShape2D_3x2wq")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals"]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_3yia7")
+animation = &"walk"
+frame = 1
+frame_progress = 0.360116
