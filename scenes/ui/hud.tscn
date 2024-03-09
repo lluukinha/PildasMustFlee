@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://d008ahfuqiv0d"]
+
+[ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1_gw7ct"]
+
+[sub_resource type="Theme" id="Theme_51xj4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0aqce"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_au8j3"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_gw7ct")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -880.0
+offset_bottom = -730.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_51xj4")
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_0aqce")
+theme_override_styles/fill = SubResource("StyleBoxFlat_au8j3")
+max_value = 1.0
+value = 0.5
+show_percentage = false

@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name BasicEnemy
 
 @onready var velocity_component = $VelocityComponent
 @onready var visuals = $Visuals
@@ -43,7 +44,6 @@ func accelerate_to_player():
 	accelerate_in_direction(direction)
 	if canMove:
 		move_and_slide()
-	#move_and_collide(velocity)
 
 
 func accelerate_in_direction(direction: float):
@@ -54,3 +54,6 @@ func accelerate_in_direction(direction: float):
 func on_died():
 	canMove = false
 	animation_player.play("die")
+	await get_tree().create_timer(.5).timeout
+	GameEvents.emit_enemy_died()
+	queue_free()

@@ -14,6 +14,7 @@ const FIST = preload("res://scenes/powerups/fist.tscn")
 @onready var fist: Sprite2D = $Visuals/fist
 @onready var attack_animation: AnimationPlayer = $AttackAnimation
 @onready var visuals: Node2D = %Visuals
+@onready var health_component: HealthComponent = $HealthComponent
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -25,6 +26,7 @@ var jumpCount = 0
 var maxJumps = 1
 var speed = NORMAL_SPEED
 var isTransformed = false
+var canMove = true
 
 func _ready():
 	loadPowerUps()
@@ -36,6 +38,12 @@ func _physics_process(delta):
 	else:
 		velocity.y += gravity * delta
 	
+	if canMove:
+		handle_keys_pressed()
+		move_and_slide()
+
+
+func handle_keys_pressed():
 	# Handle dash
 	if Input.is_action_just_pressed("Dash"):
 		dash()
@@ -55,7 +63,6 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("MoveLeft", "MoveRight")
 	move_player(direction)
-	move_and_slide()
 
 
 func jump():
