@@ -17,6 +17,6 @@ func _process(delta):
 func acquire_target():
 	var player_node = get_tree().get_first_node_in_group("player") as Player
 	if player_node != null:
-		var offsetX = 800 if player_node.isFacingLeft else 400
+		var offsetX = 800 if player_node.isFacingLeft else 500
 		var posX = player_node.global_position.x - offsetX
 		target_position = Vector2(posX, global_position.y) 

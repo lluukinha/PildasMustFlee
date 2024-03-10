@@ -1,11 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://bcjmjkd0qgnok"]
+[gd_scene load_steps=23 format=3 uid="uid://bcjmjkd0qgnok"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_wh2cd"]
 [ext_resource type="Texture2D" uid="uid://6skxsei2jaak" path="res://sprites/walking_player.png" id="2_ya0tt"]
 [ext_resource type="PackedScene" uid="uid://cacv685tn8dx5" path="res://scenes/manager/PowerUpManager.tscn" id="3_l2d8r"]
-[ext_resource type="Resource" uid="uid://j84qv01213ye" path="res://powerups/double_jump.tres" id="4_dcsue"]
+[ext_resource type="Texture2D" uid="uid://bpucx7emsmr6w" path="res://sprites/player.png" id="5_5vws1"]
 [ext_resource type="PackedScene" uid="uid://g38lucl12bnx" path="res://scenes/components/health_component.tscn" id="5_aj802"]
-[ext_resource type="Resource" uid="uid://ioos53twghib" path="res://powerups/dash.tres" id="5_lqfo4"]
+[ext_resource type="Texture2D" uid="uid://bsdh6vobb4dcs" path="res://sprites/player_inverted.png" id="6_vnaes"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_imtax"]
 atlas = ExtResource("2_ya0tt")
@@ -56,6 +56,59 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p1ln"]
+atlas = ExtResource("5_5vws1")
+region = Rect2(0, 0, 62, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21ob0"]
+atlas = ExtResource("5_5vws1")
+region = Rect2(0, 0, 62, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87hcc"]
+atlas = ExtResource("5_5vws1")
+region = Rect2(128, 0, 61, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21k03"]
+atlas = ExtResource("6_vnaes")
+region = Rect2(496, 0, 62, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bv4a2"]
+atlas = ExtResource("6_vnaes")
+region = Rect2(372, 0, 62, 106)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gn0ha"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6p1ln")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21ob0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87hcc")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21k03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bv4a2")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 5.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_3x2wq"]
 radius = 10.232
 
@@ -72,22 +125,29 @@ _data = {
 "punch": SubResource("Animation_fsco0")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2wubg"]
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_wh2cd")
 
 [node name="PowerUpManager" parent="." instance=ExtResource("3_l2d8r")]
 unique_name_in_owner = true
-resources = Array[Resource("res://powerups/power_up.gd")]([ExtResource("4_dcsue"), ExtResource("5_lqfo4")])
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_aj802")]
+max_health = 1.0
 
 [node name="PowerUpControllers" type="Node2D" parent="." groups=["power_up_controllers"]]
 
 [node name="Visuals" type="Node2D" parent="."]
 
-[node name="BodyAnimation" type="AnimatedSprite2D" parent="Visuals"]
+[node name="AngryBodyAnimation" type="AnimatedSprite2D" parent="Visuals"]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_3yia7")
+offset = Vector2(0, -47)
+
+[node name="NormalBodyAnimation" type="AnimatedSprite2D" parent="Visuals"]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_gn0ha")
 offset = Vector2(0, -47)
 
 [node name="Collider" type="CollisionShape2D" parent="."]
@@ -99,3 +159,13 @@ shape = SubResource("CircleShape2D_3x2wq")
 libraries = {
 "": SubResource("AnimationLibrary_oiwoy")
 }
+
+[node name="EnemyHurtboxArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHurtboxArea"]
+position = Vector2(1, -44)
+scale = Vector2(1.76, 4.4)
+shape = SubResource("CircleShape2D_2wubg")

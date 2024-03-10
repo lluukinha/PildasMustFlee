@@ -46,6 +46,14 @@ func accelerate_to_player():
 		move_and_slide()
 
 
+func stopMovement():
+	canMove = false
+
+
+func startMovement():
+	canMove = true
+
+
 func accelerate_in_direction(direction: float):
 	var desired_velocity = Vector2(direction, 1)
 	velocity = velocity.lerp(desired_velocity, 1 - exp(-3 * get_process_delta_time()))

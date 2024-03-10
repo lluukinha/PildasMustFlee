@@ -21,11 +21,18 @@ func _process(delta):
 		close_and_transitionate()
 
 
-func open():
+func open(changeCollision: bool):
 	animated_sprite_2d.play("open")
 	await get_tree().create_timer(.5).timeout
 	animated_sprite_2d.play("opened")
-	collision.disabled = false
+	if (changeCollision):
+		collision.disabled = false
+
+
+func close():
+	animated_sprite_2d.play("close")
+	await get_tree().create_timer(.5).timeout
+	animated_sprite_2d.play("closed")
 
 
 func close_and_transitionate():
