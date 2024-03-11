@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bcjmjkd0qgnok"]
+[gd_scene load_steps=30 format=3 uid="uid://bcjmjkd0qgnok"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_wh2cd"]
 [ext_resource type="Texture2D" uid="uid://6skxsei2jaak" path="res://sprites/walking_player.png" id="2_ya0tt"]
@@ -111,6 +111,55 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kosuu"]
+atlas = ExtResource("5_5vws1")
+region = Rect2(248, 106, 62, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77c56"]
+atlas = ExtResource("5_5vws1")
+region = Rect2(248, 106, 62, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_avwpb"]
+atlas = ExtResource("5_5vws1")
+region = Rect2(310, 106, 62, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0rrg"]
+atlas = ExtResource("5_5vws1")
+region = Rect2(248, 106, 62, 106)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y731u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kosuu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_77c56")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_538lh")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_avwpb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0rrg")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 5.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_3x2wq"]
 radius = 10.232
 
@@ -141,6 +190,7 @@ process_mode = 3
 unique_name_in_owner = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_aj802")]
+max_health = 5.0
 
 [node name="PowerUpControllers" type="Node2D" parent="." groups=["power_up_controllers"]]
 
@@ -154,6 +204,12 @@ offset = Vector2(0, -47)
 [node name="NormalBodyAnimation" type="AnimatedSprite2D" parent="Visuals"]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_gn0ha")
+offset = Vector2(0, -47)
+
+[node name="AberrationBodyAnimation" type="AnimatedSprite2D" parent="Visuals"]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_y731u")
+animation = &"walk_left"
 offset = Vector2(0, -47)
 
 [node name="Collider" type="CollisionShape2D" parent="."]

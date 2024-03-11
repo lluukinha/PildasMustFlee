@@ -1,12 +1,19 @@
-[gd_scene load_steps=32 format=3 uid="uid://dpp0qx7fideh6"]
+[gd_scene load_steps=36 format=3 uid="uid://dpp0qx7fideh6"]
 
 [ext_resource type="Script" path="res://scenes/upgrade_levels/ElevatorUpgrade.gd" id="1_c4u55"]
 [ext_resource type="Texture2D" uid="uid://bpucx7emsmr6w" path="res://sprites/player.png" id="1_r8mdl"]
 [ext_resource type="Texture2D" uid="uid://biklxdtxohc8n" path="res://sprites/nail.png" id="2_0l5bg"]
+[ext_resource type="PackedScene" uid="uid://byi8c0p6u7lqc" path="res://scenes/components/hit_flash_component.tscn" id="2_rrxu6"]
+[ext_resource type="Shader" path="res://scenes/components/hit_flash_component.gdshader" id="3_ft8nh"]
 [ext_resource type="Texture2D" uid="uid://cmaepubvpmou6" path="res://sprites/syringe.png" id="3_rxqci"]
 [ext_resource type="Texture2D" uid="uid://bsdh6vobb4dcs" path="res://sprites/player_inverted.png" id="4_5tnlu"]
 [ext_resource type="Texture2D" uid="uid://d1a8tqe78sk5c" path="res://map/platform.png" id="5_xpq54"]
 [ext_resource type="Texture2D" uid="uid://tg2hgte35nv0" path="res://sprites/fist.png" id="7_b1wo6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1mith"]
+resource_local_to_scene = true
+shader = ExtResource("3_ft8nh")
+shader_parameter/lerp_percent = 0.0
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2av8j"]
 
@@ -2198,6 +2205,10 @@ physics_layer_0/collision_mask = 3
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_2av8j")
 sources/0 = SubResource("TileSetAtlasSource_gdfhx")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_doea6"]
+atlas = ExtResource("1_r8mdl")
+region = Rect2(250, 106, 61, 106)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_xhead"]
 atlas = ExtResource("1_r8mdl")
 region = Rect2(253, 424, 61, 106)
@@ -2212,6 +2223,14 @@ region = Rect2(0, 0, 62, 106)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_j7adl"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_doea6")
+}],
+"loop": true,
+"name": &"aberration",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xhead")
@@ -2455,18 +2474,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(636, 453), Vector2(480, 453)]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("FistSprite:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="Animation" id="Animation_6ma8s"]
 length = 0.001
@@ -2482,18 +2489,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(636, 453)]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("FistSprite:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ql0va"]
 _data = {
@@ -2503,6 +2498,14 @@ _data = {
 
 [node name="ElevatorUpgrade" type="Node2D"]
 script = ExtResource("1_c4u55")
+
+[node name="PlayerHitFlashComponent" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("2_rrxu6")]
+sprite = NodePath("../PlayerSprite")
+hit_flash_material = SubResource("ShaderMaterial_1mith")
+
+[node name="ScientistHitFlashComponent" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("2_rrxu6")]
+sprite = NodePath("../ScientistSprite")
+hit_flash_material = SubResource("ShaderMaterial_1mith")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_d88da")

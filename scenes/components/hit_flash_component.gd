@@ -1,4 +1,5 @@
 extends Node
+class_name HitFlashComponent
 
 @export var health_component: HealthComponent
 @export var sprite: AnimatedSprite2D
@@ -7,8 +8,13 @@ extends Node
 var hit_flash_tween: Tween
 
 func _ready():
-	health_component.health_changed.connect(on_health_changed)
+	if health_component != null:
+		health_component.health_changed.connect(on_health_changed)
 	sprite.material = hit_flash_material
+
+
+func flash():
+	on_health_changed()
 
 
 func on_health_changed():
