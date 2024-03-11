@@ -5,4 +5,4 @@
 [resource]
 resource_name = "Double Jump"
 script = ExtResource("1_r50rr")
-id = "fist"
+id = "double_jump"

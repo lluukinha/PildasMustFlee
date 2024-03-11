@@ -3,6 +3,7 @@ extends Node2D
 @onready var lift: Lift = %Lift
 @onready var time_counter: TimeCounter = $TimeCounter
 @onready var player: Player = $Foreground/Player
+@onready var camera_animation: AnimationPlayer = $CameraAnimation
 
 const floor_clear_scene = preload("res://scenes/ui/floor_clear.tscn")
 const full_screen_text_ui_scene = preload("res://scenes/ui/full_screen_text_ui.tscn")
@@ -19,6 +20,13 @@ func _ready():
 
 	time_counter.timeout.connect(on_counter_timeout)
 	player.died.connect(on_player_died)
+	lift.level_up.connect(on_level_up)
+
+
+func on_level_up():
+	camera_animation.play("lift_up")
+	await get_tree().create_timer(1.5).timeout
+	ScreenTransition.transition_to_scene("res://scenes/upgrade_levels/ElevatorUpgrade.tscn")
 
 
 func on_player_died():
