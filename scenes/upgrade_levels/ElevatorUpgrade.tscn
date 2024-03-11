@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dpp0qx7fideh6"]
+[gd_scene load_steps=32 format=3 uid="uid://dpp0qx7fideh6"]
 
 [ext_resource type="Script" path="res://scenes/upgrade_levels/ElevatorUpgrade.gd" id="1_c4u55"]
 [ext_resource type="Texture2D" uid="uid://bpucx7emsmr6w" path="res://sprites/player.png" id="1_r8mdl"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cmaepubvpmou6" path="res://sprites/syringe.png" id="3_rxqci"]
 [ext_resource type="Texture2D" uid="uid://bsdh6vobb4dcs" path="res://sprites/player_inverted.png" id="4_5tnlu"]
 [ext_resource type="Texture2D" uid="uid://d1a8tqe78sk5c" path="res://map/platform.png" id="5_xpq54"]
+[ext_resource type="Texture2D" uid="uid://tg2hgte35nv0" path="res://sprites/fist.png" id="7_b1wo6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2av8j"]
 
@@ -2197,6 +2198,10 @@ physics_layer_0/collision_mask = 3
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_2av8j")
 sources/0 = SubResource("TileSetAtlasSource_gdfhx")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhead"]
+atlas = ExtResource("1_r8mdl")
+region = Rect2(253, 424, 61, 106)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_gan7i"]
 atlas = ExtResource("1_r8mdl")
 region = Rect2(186, 0, 62, 106)
@@ -2207,6 +2212,14 @@ region = Rect2(0, 0, 62, 106)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_j7adl"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhead")
+}],
+"loop": true,
+"name": &"angry",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gan7i")
@@ -2427,6 +2440,67 @@ _data = {
 "blink": SubResource("Animation_tes0y")
 }
 
+[sub_resource type="Animation" id="Animation_ewb0r"]
+resource_name = "punch"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FistSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19519),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(636, 453), Vector2(480, 453)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FistSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_6ma8s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FistSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(636, 453)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FistSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ql0va"]
+_data = {
+"RESET": SubResource("Animation_6ma8s"),
+"punch": SubResource("Animation_ewb0r")
+}
+
 [node name="ElevatorUpgrade" type="Node2D"]
 script = ExtResource("1_c4u55")
 
@@ -2471,6 +2545,11 @@ libraries = {
 "": SubResource("AnimationLibrary_c1kb7")
 }
 autoplay = "blink"
+
+[node name="PunchAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ql0va")
+}
 
 [node name="AbilityTextUI" type="CanvasLayer" parent="."]
 
@@ -2542,3 +2621,8 @@ theme_override_constants/outline_size = 15
 theme_override_font_sizes/font_size = 30
 text = "Pess any key to continue"
 horizontal_alignment = 1
+
+[node name="FistSprite" type="Sprite2D" parent="."]
+position = Vector2(636, 453)
+scale = Vector2(-1, 1)
+texture = ExtResource("7_b1wo6")

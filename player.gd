@@ -20,6 +20,7 @@ const FIST_SCENE = preload("res://scenes/powerups/fist.tscn")
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var enemy_hurtbox_area: Area2D = %EnemyHurtboxArea
 @onready var hud: HUD = $HUD
+@onready var vignette: Vignette = $Vignette
 
 
 @onready var angry_body_animation: AnimatedSprite2D = %AngryBodyAnimation
@@ -42,9 +43,12 @@ var canDash = false
 var canAttack = false
 var canUseHealthBar = false
 
+var invincible = false
+
 func _ready():
 	body_animation = normal_body_animation
 	angry_body_animation.visible = false
+	hud.visible = false
 	loadPowerUps()
 	enemy_hurtbox_area.body_entered.connect(on_enemy_body_entered)
 	on_player_health_changed()
@@ -56,8 +60,24 @@ func on_player_health_changed():
 
 
 func on_enemy_body_entered(other_area: Node2D):
-	if other_area is BasicEnemy:
+	if other_area is BasicEnemy && !invincible:
+		if canUseHealthBar:
+			takeDamage()
+		else:
+			vignette.on_game_over()
+			died.emit()
+
+
+func takeDamage():
+	if (health_component.current_health <= 0):
+		vignette.on_game_over()
 		died.emit()
+	else:
+		health_component.damage(1)
+		vignette.on_player_damaged()
+		invincible = true
+		await get_tree().create_timer(1).timeout
+		invincible = false
 
 
 func _physics_process(delta):
@@ -144,6 +164,9 @@ func loadPowerUps():
 		elif (power_up.id == HEALTH_BAR.id):
 			canUseHealthBar = true
 			hud.visible = true
+			angry_body_animation.visible = true
+			normal_body_animation.visible = false
+			body_animation = angry_body_animation
 
 
 func attack():
