@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbuc5mwyr5m2s"]
+
+[ext_resource type="Script" path="res://scenes/ui/menu.gd" id="1_y4oej"]
+
+[node name="Menu" type="CanvasLayer"]
+script = ExtResource("1_y4oej")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(400, 100)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 250
+
+[node name="Button" type="Button" parent="MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Start game"
