@@ -7,5 +7,4 @@ func _ready():
 
 
 func on_timer_timeout():
-	print("remove clear")
 	queue_free()

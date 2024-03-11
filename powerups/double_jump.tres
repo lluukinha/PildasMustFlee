@@ -6,3 +6,5 @@
 resource_name = "Double Jump"
 script = ExtResource("1_hn0rl")
 id = "double_jump"
+name = "Double Jump"
+description = "Press [space] to jump"

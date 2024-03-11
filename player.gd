@@ -10,6 +10,7 @@ const JUMP_VELOCITY = -500.0
 const DASH: PowerUp = preload("res://powerups/dash.tres")
 const DOUBLE_JUMP: PowerUp = preload("res://powerups/double_jump.tres")
 const FIST: PowerUp = preload("res://powerups/fist.tres")
+const HEALTH_BAR: PowerUp = preload("res://powerups/health_bar.tres")
 const FIST_SCENE = preload("res://scenes/powerups/fist.tscn")
 
 @onready var power_up_manager: PowerUpManager = %PowerUpManager
@@ -18,11 +19,11 @@ const FIST_SCENE = preload("res://scenes/powerups/fist.tscn")
 @onready var visuals: Node2D = %Visuals
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var enemy_hurtbox_area: Area2D = %EnemyHurtboxArea
+@onready var hud: HUD = $HUD
+
 
 @onready var angry_body_animation: AnimatedSprite2D = %AngryBodyAnimation
 @onready var normal_body_animation: AnimatedSprite2D = %NormalBodyAnimation
-
-
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -39,12 +40,19 @@ var canMove = true
 var canDoubleJump = false
 var canDash = false
 var canAttack = false
+var canUseHealthBar = false
 
 func _ready():
 	body_animation = normal_body_animation
 	angry_body_animation.visible = false
 	loadPowerUps()
 	enemy_hurtbox_area.body_entered.connect(on_enemy_body_entered)
+	on_player_health_changed()
+	health_component.health_changed.connect(on_player_health_changed)
+
+
+func on_player_health_changed():
+	hud.setProgressBarValue(health_component.get_health_percent())
 
 
 func on_enemy_body_entered(other_area: Node2D):
@@ -115,9 +123,10 @@ func move_player(direction: float):
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		body_animation.play("default")
-	
+
 
 func loadPowerUps():
+	power_up_manager.resources = GameEvents.playerPowerUps
 	for power_up in power_up_manager.resources:
 		if (power_up.id == DOUBLE_JUMP.id):
 			canDoubleJump = true
@@ -131,13 +140,17 @@ func loadPowerUps():
 		
 		elif (power_up.id == FIST.id):
 			canAttack = true
+		
+		elif (power_up.id == HEALTH_BAR.id):
+			canUseHealthBar = true
+			hud.visible = true
 
 
 func attack():
 	if !isTransformed:
 		return
 	
-	var fistInstance = FIST.instantiate()
+	var fistInstance = FIST_SCENE.instantiate()
 	var player = get_tree().get_first_node_in_group("player") as Player
 	get_tree().get_first_node_in_group("powerups").add_child(fistInstance)
 	if (isFacingLeft):

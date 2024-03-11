@@ -7,4 +7,6 @@
 resource_name = "Dash"
 script = ExtResource("1_7jlhe")
 id = "dash"
+name = "Dash"
+description = "Press [x] to Dash"
 controller = ExtResource("1_qpkeg")

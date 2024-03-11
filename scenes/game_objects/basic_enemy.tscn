@@ -12,8 +12,8 @@ resource_local_to_scene = true
 shader = ExtResource("4_4ww5e")
 shader_parameter/lerp_percent = 0.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xf0g4"]
-radius = 23.0014
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ko2ey"]
+size = Vector2(30.4688, 32.6415)
 
 [sub_resource type="Animation" id="Animation_061te"]
 resource_name = "RESET"
@@ -119,9 +119,9 @@ sprite = NodePath("../Visuals/AnimatedSprite2D")
 hit_flash_material = SubResource("ShaderMaterial_kqip6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -52)
+position = Vector2(0.5, -38.6)
 scale = Vector2(1.28, 2.12)
-shape = SubResource("CircleShape2D_xf0g4")
+shape = SubResource("RectangleShape2D_ko2ey")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -141,6 +141,7 @@ offset = Vector2(0, -48)
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+visible = false
 position = Vector2(0, -52)
 scale = Vector2(1.51916, 1.61265)
 shape = SubResource("CircleShape2D_tf3h0")

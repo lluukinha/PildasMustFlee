@@ -2,11 +2,12 @@ extends Node2D
 
 @onready var lift: Lift = %Lift
 @onready var time_counter: TimeCounter = $TimeCounter
-@onready var player: Player = $Foreground/Player
 @onready var camera_animation: AnimationPlayer = $CameraAnimation
+@onready var player: Player = $Foreground/Player
 
 const floor_clear_scene = preload("res://scenes/ui/floor_clear.tscn")
 const full_screen_text_ui_scene = preload("res://scenes/ui/full_screen_text_ui.tscn")
+
 
 func _ready():
 	player.visible = false
@@ -25,14 +26,14 @@ func _ready():
 
 func on_level_up():
 	camera_animation.play("lift_up")
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1).timeout
 	ScreenTransition.transition_to_scene("res://scenes/upgrade_levels/ElevatorUpgrade.tscn")
 
 
 func on_player_died():
 	var player_died_text_instance = full_screen_text_ui_scene.instantiate() as FullScreenTextUI
 	player_died_text_instance.labelText = "You got caught!"
-	player_died_text_instance.pressKeylabelText = "Press spacebar to restart level!"
+	player_died_text_instance.pressKeylabelText = "Press [space] to restart level!"
 	add_child(player_died_text_instance)
 	player_died_text_instance.start.connect(on_restart)
 
@@ -62,7 +63,6 @@ func on_start_level():
 	await get_tree().create_timer(.5).timeout
 	
 	get_tree().call_group("enemy", "startMovement")
-	
 	
 	time_counter.visible = true
 	player.isTransformed = true

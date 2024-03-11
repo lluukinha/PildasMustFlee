@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://dpp0qx7fideh6"]
+[gd_scene load_steps=27 format=3 uid="uid://dpp0qx7fideh6"]
 
 [ext_resource type="Script" path="res://scenes/upgrade_levels/ElevatorUpgrade.gd" id="1_c4u55"]
 [ext_resource type="Texture2D" uid="uid://bpucx7emsmr6w" path="res://sprites/player.png" id="1_r8mdl"]
 [ext_resource type="Texture2D" uid="uid://biklxdtxohc8n" path="res://sprites/nail.png" id="2_0l5bg"]
 [ext_resource type="Texture2D" uid="uid://cmaepubvpmou6" path="res://sprites/syringe.png" id="3_rxqci"]
+[ext_resource type="Texture2D" uid="uid://bsdh6vobb4dcs" path="res://sprites/player_inverted.png" id="4_5tnlu"]
 [ext_resource type="Texture2D" uid="uid://d1a8tqe78sk5c" path="res://map/platform.png" id="5_xpq54"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2av8j"]
@@ -2227,6 +2228,14 @@ animations = [{
 atlas = ExtResource("1_r8mdl")
 region = Rect2(2, 424, 62, 106)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gl38"]
+atlas = ExtResource("4_5tnlu")
+region = Rect2(496, 424, 62, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cn0b1"]
+atlas = ExtResource("4_5tnlu")
+region = Rect2(434, 424, 62, 106)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0c6p2"]
 atlas = ExtResource("1_r8mdl")
 region = Rect2(64, 424, 62, 106)
@@ -2243,51 +2252,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_5gl38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cn0b1")
+}],
+"loop": true,
+"name": &"leave",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_0c6p2")
 }],
 "loop": true,
 "name": &"side",
 "speed": 5.0
 }]
-
-[sub_resource type="Animation" id="Animation_amfgg"]
-resource_name = "apply"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Injection:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Injection:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.251414, 0.451414),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-0.174533, 0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Injection/Syringe:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.452062, 0.630147),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(619, 380), Vector2(533, 470)]
-}
 
 [sub_resource type="Animation" id="Animation_ganva"]
 length = 0.001
@@ -2328,10 +2309,122 @@ tracks/2/keys = {
 "values": [Vector2(619, 380)]
 }
 
+[sub_resource type="Animation" id="Animation_amfgg"]
+resource_name = "apply"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Injection:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Injection:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.251414, 0.451414),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.174533, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Injection/Syringe:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.452062, 0.630147),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(619, 380), Vector2(533, 470)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2h80s"]
 _data = {
 "RESET": SubResource("Animation_ganva"),
 "apply": SubResource("Animation_amfgg")
+}
+
+[sub_resource type="Animation" id="Animation_ew2t7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ScientistSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(856, 420)]
+}
+
+[sub_resource type="Animation" id="Animation_83i05"]
+resource_name = "scientist_leave"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ScientistSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(856, 420), Vector2(1514, 420)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jgkyc"]
+_data = {
+"RESET": SubResource("Animation_ew2t7"),
+"scientist_leave": SubResource("Animation_83i05")
+}
+
+[sub_resource type="Animation" id="Animation_h06pt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AbilityTextUI/MarginContainer/VBoxContainer/PressToContinueLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tes0y"]
+resource_name = "blink"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AbilityTextUI/MarginContainer/VBoxContainer/PressToContinueLabel:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c1kb7"]
+_data = {
+"RESET": SubResource("Animation_h06pt"),
+"blink": SubResource("Animation_tes0y")
 }
 
 [node name="ElevatorUpgrade" type="Node2D"]
@@ -2367,3 +2460,85 @@ texture = ExtResource("3_rxqci")
 libraries = {
 "": SubResource("AnimationLibrary_2h80s")
 }
+
+[node name="ScientistAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jgkyc")
+}
+
+[node name="PressToContinueAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_c1kb7")
+}
+autoplay = "blink"
+
+[node name="AbilityTextUI" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="AbilityTextUI"]
+custom_minimum_size = Vector2(650, 0)
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_right = 120
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AbilityTextUI/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="AbilityUnlockedLabel" type="Label" parent="AbilityTextUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 70
+text = "Ability unlocked!"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="AbilityTextUI/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="AbilityTextUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AbilityTextUI/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AbilityTextUI/MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="AbilityNameLabel" type="Label" parent="AbilityTextUI/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 50
+text = "-----"
+horizontal_alignment = 1
+
+[node name="AbilityTipLabel" type="Label" parent="AbilityTextUI/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 40
+text = "----"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="AbilityTextUI/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="PressToContinueLabel" type="Label" parent="AbilityTextUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 30
+text = "Pess any key to continue"
+horizontal_alignment = 1

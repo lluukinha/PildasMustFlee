@@ -4,7 +4,7 @@ class_name FullScreenTextUI
 signal start
 
 @export var labelText: String
-@export var pressKeylabelText: String = "Press spacebar to start"
+@export var pressKeylabelText: String = "Press [space] to start"
 
 @onready var press_any_key_label: Label = %PressAnyKeyLabel
 @onready var level_description_label: Label = %LevelDescriptionLabel

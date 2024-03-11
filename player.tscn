@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bcjmjkd0qgnok"]
+[gd_scene load_steps=24 format=3 uid="uid://bcjmjkd0qgnok"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_wh2cd"]
 [ext_resource type="Texture2D" uid="uid://6skxsei2jaak" path="res://sprites/walking_player.png" id="2_ya0tt"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bpucx7emsmr6w" path="res://sprites/player.png" id="5_5vws1"]
 [ext_resource type="PackedScene" uid="uid://g38lucl12bnx" path="res://scenes/components/health_component.tscn" id="5_aj802"]
 [ext_resource type="Texture2D" uid="uid://bsdh6vobb4dcs" path="res://sprites/player_inverted.png" id="6_vnaes"]
+[ext_resource type="PackedScene" uid="uid://d008ahfuqiv0d" path="res://scenes/ui/hud.tscn" id="7_kn4hl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_imtax"]
 atlas = ExtResource("2_ya0tt")
@@ -134,7 +135,6 @@ script = ExtResource("1_wh2cd")
 unique_name_in_owner = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_aj802")]
-max_health = 1.0
 
 [node name="PowerUpControllers" type="Node2D" parent="." groups=["power_up_controllers"]]
 
@@ -169,3 +169,5 @@ collision_mask = 2
 position = Vector2(1, -44)
 scale = Vector2(1.76, 4.4)
 shape = SubResource("CircleShape2D_2wubg")
+
+[node name="HUD" parent="." instance=ExtResource("7_kn4hl")]

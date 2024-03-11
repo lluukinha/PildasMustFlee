@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=2 format=3 uid="uid://bpbmtu6vrbv5f"]
+
+[ext_resource type="Script" path="res://powerups/power_up.gd" id="1_n6yti"]
+
+[resource]
+resource_name = "Double Jump"
+script = ExtResource("1_n6yti")
+id = "health_bar"
+name = "Health bar"
+description = "Takes longer to die!"
