@@ -1,13 +1,13 @@
 extends Node2D
 
 @onready var lift: Lift = %Lift
-@onready var time_counter: TimeCounter = $TimeCounter
 @onready var camera_animation: AnimationPlayer = $CameraAnimation
 @onready var player: Player = $Foreground/Player
 
 const floor_clear_scene = preload("res://scenes/ui/floor_clear.tscn")
 const full_screen_text_ui_scene = preload("res://scenes/ui/full_screen_text_ui.tscn")
 
+var levelClear = false
 
 func _ready():
 	player.visible = false
@@ -15,14 +15,20 @@ func _ready():
 	get_tree().call_group("enemy", "stopMovement")
 	
 	var start_text_instance = full_screen_text_ui_scene.instantiate() as FullScreenTextUI
-	start_text_instance.labelText = "Survive for 10 seconds!"
+	start_text_instance.labelText = "Kill all Scientists!"
 	add_child(start_text_instance)
 	start_text_instance.start.connect(on_start_level)
 
-	time_counter.timeout.connect(on_counter_timeout)
 	player.died.connect(on_player_died)
 	lift.level_up.connect(on_level_up)
 
+
+func _process(delta):
+	var enemies = get_tree().get_nodes_in_group("enemy").size()
+	if enemies == 0:
+		if !levelClear:
+			levelClear = true
+			finish()
 
 func on_level_up():
 	camera_animation.play("lift_up")
@@ -64,11 +70,4 @@ func on_start_level():
 	
 	get_tree().call_group("enemy", "startMovement")
 	
-	time_counter.visible = true
 	player.isTransformed = true
-
-
-func on_counter_timeout():
-	time_counter.queue_free()
-	get_tree().call_group("enemy", "on_died")
-	finish()

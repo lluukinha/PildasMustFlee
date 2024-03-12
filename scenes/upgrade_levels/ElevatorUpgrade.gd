@@ -131,5 +131,7 @@ func _unhandled_key_input(event):
 	if event.is_pressed() && canContinue:
 		if powerUp.id == DOUBLE_JUMP.id:
 			ScreenTransition.transition_to_scene("res://scenes/levels/Level1.tscn")
+		elif powerUp.id == FIST.id:
+			ScreenTransition.transition_to_scene("res://scenes/levels/Level4.tscn")
 		else:
 			ScreenTransition.transition_to_scene("res://scenes/levels/Level0.tscn")
