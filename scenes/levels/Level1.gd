@@ -10,6 +10,8 @@ const SHURIKEN_SCENE = preload("res://scenes/game_objects/shuriken.tscn")
 const FLOOR_CLEAR_SCENE = preload("res://scenes/ui/floor_clear.tscn")
 const FULL_SCREEN_TEXT_UI_SCENE = preload("res://scenes/ui/full_screen_text_ui.tscn")
 
+var levelClear = false
+
 func _ready():
 	ninja_enemy_bottom.throwShuriken.connect(throwShuriken.bind(ninja_enemy_bottom))
 	ninja_enemy_top.throwShuriken.connect(throwShuriken.bind(ninja_enemy_top))
@@ -31,10 +33,8 @@ func goToNextLevel():
 	ScreenTransition.transition_to_scene("res://scenes/upgrade_levels/ElevatorUpgrade.tscn")
 
 func on_level_up():
-	#camera_animation.play("lift_up")
 	var tween = create_tween()
 	var targetPositionY = global_position.y + 1200
-	
 	tween.tween_method(level_tween_method, global_position.y, targetPositionY, 1)
 	tween.tween_callback(goToNextLevel)
 
@@ -71,6 +71,8 @@ func on_start_level():
 
 
 func throwShuriken(parentNode: NinjaEnemy):
+	if levelClear:
+		return
 	var shuriken_instance = SHURIKEN_SCENE.instantiate()
 	get_tree().get_first_node_in_group("entities_layer").add_child(shuriken_instance)
 	shuriken_instance.global_position = parentNode.global_position
@@ -95,7 +97,7 @@ func onPullLever():
 
 func finish():
 	await get_tree().create_timer(.5).timeout
-	
+	levelClear = true
 	var floor_clear_instance = FLOOR_CLEAR_SCENE.instantiate()
 	get_tree().get_first_node_in_group("foreground_layer").add_child(floor_clear_instance)
 	await get_tree().create_timer(2.0).timeout
