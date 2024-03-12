@@ -63,7 +63,6 @@ func on_player_health_changed():
 
 
 func on_body_entered(other_area: Node2D):
-	print(other_area)
 	if "dealDamage" in other_area && other_area.dealDamage == true:
 		if canUseHealthBar:
 			takeDamage()
