@@ -18,6 +18,7 @@ extends Node2D
 @onready var ability_name_label: Label = %AbilityNameLabel
 @onready var ability_tip_label: Label = %AbilityTipLabel
 
+const DOUBLE_JUMP = preload("res://powerups/double_jump.tres")
 const HEALTH_BAR = preload("res://powerups/health_bar.tres")
 const FIST = preload("res://powerups/fist.tres")
 
@@ -128,4 +129,7 @@ func killScientist():
 
 func _unhandled_key_input(event):
 	if event.is_pressed() && canContinue:
-		ScreenTransition.transition_to_scene("res://scenes/levels/Level0.tscn")
+		if powerUp.id == DOUBLE_JUMP.id:
+			ScreenTransition.transition_to_scene("res://scenes/levels/Level1.tscn")
+		else:
+			ScreenTransition.transition_to_scene("res://scenes/levels/Level0.tscn")

@@ -53,7 +53,7 @@ func _ready():
 	aberration_body_animation.visible = false
 	hud.visible = false
 	loadPowerUps()
-	enemy_hurtbox_area.body_entered.connect(on_enemy_body_entered)
+	enemy_hurtbox_area.body_entered.connect(on_body_entered)
 	on_player_health_changed()
 	health_component.health_changed.connect(on_player_health_changed)
 
@@ -62,13 +62,17 @@ func on_player_health_changed():
 	hud.setProgressBarValue(health_component.get_health_percent())
 
 
-func on_enemy_body_entered(other_area: Node2D):
-	if other_area is BasicEnemy && !invincible:
+func on_body_entered(other_area: Node2D):
+	print(other_area)
+	if "dealDamage" in other_area && other_area.dealDamage == true:
 		if canUseHealthBar:
 			takeDamage()
 		else:
 			vignette.on_game_over()
 			died.emit()
+	
+	if other_area is Lever:
+		other_area.pull_lever()
 
 
 func takeDamage():

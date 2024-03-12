@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://ioxigmvxn717"]
+
+[ext_resource type="Script" path="res://scenes/game_objects/ninja_enemy.gd" id="1_5bfxu"]
+[ext_resource type="Texture2D" uid="uid://bpucx7emsmr6w" path="res://sprites/player.png" id="1_m4mr1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jaiwu"]
+size = Vector2(45, 85)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_covnj"]
+atlas = ExtResource("1_m4mr1")
+region = Rect2(318, 318, 60, 106)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gbi6l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_covnj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="NinjaEnemy" type="CharacterBody2D" groups=["ninja_enemy"]]
+position = Vector2(1230, 449)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_5bfxu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, 1.5)
+shape = SubResource("RectangleShape2D_jaiwu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gbi6l")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true

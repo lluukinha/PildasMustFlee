@@ -20,10 +20,7 @@ var powerUps = [
 	FIST
 ]
 
-var playerPowerUps: Array[PowerUp] = [DOUBLE_JUMP,
-	DASH,
-	HEALTH_BAR,
-	FIST]
+var playerPowerUps: Array[PowerUp] = []
 
 func up_level(newPowerUp: PowerUp):
 	playerPowerUps.append(newPowerUp)

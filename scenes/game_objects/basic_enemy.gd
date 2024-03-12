@@ -11,6 +11,7 @@ class_name BasicEnemy
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var canMove = true
+var dealDamage = true
 
 func _ready():
 	health_component.died.connect(on_died)
