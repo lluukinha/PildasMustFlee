@@ -33,7 +33,8 @@ func _process(delta):
 func on_level_up():
 	camera_animation.play("lift_up")
 	await get_tree().create_timer(1).timeout
-	ScreenTransition.transition_to_scene("res://scenes/upgrade_levels/ElevatorUpgrade.tscn")
+	GameEvents.finishGame()
+	ScreenTransition.transition_to_scene("res://scenes/ui/screen_text_between_levels_ui.tscn")
 
 
 func on_player_died():

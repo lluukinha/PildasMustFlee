@@ -7,4 +7,4 @@ func _ready():
 
 
 func on_button_pressed():
-	ScreenTransition.transition_to_scene("res://scenes/levels/Level0.tscn")
+	ScreenTransition.transition_to_scene("res://scenes/ui/screen_text_between_levels_ui.tscn")

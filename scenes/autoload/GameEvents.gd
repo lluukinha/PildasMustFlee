@@ -7,6 +7,8 @@ signal enemy_died
 
 var player: Player
 var level: int = 0
+var startedGame = false
+var endGame = false
 
 const DOUBLE_JUMP = preload("res://powerups/double_jump.tres")
 const DASH = preload("res://powerups/dash.tres")
@@ -25,6 +27,10 @@ var playerPowerUps: Array[PowerUp] = []
 func up_level(newPowerUp: PowerUp):
 	playerPowerUps.append(newPowerUp)
 	level += 1
+
+
+func finishGame():
+	endGame = true
 
 
 func get_power_up():

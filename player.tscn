@@ -191,6 +191,10 @@ unique_name_in_owner = true
 [node name="HealthComponent" parent="." instance=ExtResource("5_aj802")]
 max_health = 5.0
 
+[node name="DamageIntervalTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [node name="PowerUpControllers" type="Node2D" parent="." groups=["power_up_controllers"]]
 
 [node name="Visuals" type="Node2D" parent="."]

@@ -96,7 +96,6 @@ func endAnimation():
 	scientist_animation.play("scientist_leave")
 	await get_tree().create_timer(1).timeout
 	ability_text_ui.visible = true
-	GameEvents.up_level(powerUp)
 	canContinue = true
 
 
@@ -122,16 +121,16 @@ func killScientist():
 	scientist_hit_flash_component.flash()
 	await get_tree().create_timer(.4).timeout
 	scientist_sprite.visible = false
-	GameEvents.up_level(powerUp)
 	ability_text_ui.visible = true
 	canContinue = true
 	
 
 func _unhandled_key_input(event):
 	if event.is_pressed() && canContinue:
-		if powerUp.id == DOUBLE_JUMP.id:
-			ScreenTransition.transition_to_scene("res://scenes/levels/Level1.tscn")
-		elif powerUp.id == FIST.id:
-			ScreenTransition.transition_to_scene("res://scenes/levels/Level4.tscn")
-		else:
-			ScreenTransition.transition_to_scene("res://scenes/levels/Level0.tscn")
+		ScreenTransition.transition_to_scene("res://scenes/ui/screen_text_between_levels_ui.tscn")
+		#if powerUp.id == DOUBLE_JUMP.id:
+			#ScreenTransition.transition_to_scene("res://scenes/levels/Level1.tscn")
+		#elif powerUp.id == FIST.id:
+			#ScreenTransition.transition_to_scene("res://scenes/levels/Level4.tscn")
+		#else:
+			#ScreenTransition.transition_to_scene("res://scenes/levels/Level0.tscn")

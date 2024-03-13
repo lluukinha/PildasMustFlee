@@ -13,6 +13,7 @@ const FIST: PowerUp = preload("res://powerups/fist.tres")
 const HEALTH_BAR: PowerUp = preload("res://powerups/health_bar.tres")
 const FIST_SCENE = preload("res://scenes/powerups/fist.tscn")
 
+@onready var damage_interval_timer: Timer = $DamageIntervalTimer
 @onready var power_up_manager: PowerUpManager = %PowerUpManager
 @onready var fist: Sprite2D = $Visuals/fist
 @onready var attack_animation: AnimationPlayer = $AttackAnimation
@@ -21,7 +22,7 @@ const FIST_SCENE = preload("res://scenes/powerups/fist.tscn")
 @onready var enemy_hurtbox_area: Area2D = %EnemyHurtboxArea
 @onready var hud: HUD = $HUD
 @onready var vignette: Vignette = $Vignette
-
+@onready var collision_shape_2d: CollisionShape2D = $EnemyHurtboxArea/CollisionShape2D
 
 @onready var angry_body_animation: AnimatedSprite2D = %AngryBodyAnimation
 @onready var normal_body_animation: AnimatedSprite2D = %NormalBodyAnimation
@@ -33,6 +34,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var body_animation: AnimatedSprite2D
 
+var number_colliding_bodies = 0
 var isFacingLeft = false
 var jumpCount = 0
 var maxJumps = 1
@@ -54,36 +56,45 @@ func _ready():
 	hud.visible = false
 	loadPowerUps()
 	enemy_hurtbox_area.body_entered.connect(on_body_entered)
+	enemy_hurtbox_area.body_exited.connect(on_body_exited)
 	on_player_health_changed()
 	health_component.health_changed.connect(on_player_health_changed)
+	damage_interval_timer.timeout.connect(takeDamage)
 
 
 func on_player_health_changed():
 	hud.setProgressBarValue(health_component.get_health_percent())
 
 
-func on_body_entered(other_area: Node2D):
-	if "dealDamage" in other_area && other_area.dealDamage == true:
+func on_body_exited(other_body: Node2D):
+	if "dealDamage" in other_body && other_body.dealDamage == true:
+		number_colliding_bodies -= 1
+
+
+func on_body_entered(other_body: Node2D):
+	if "dealDamage" in other_body && other_body.dealDamage == true:
 		if canUseHealthBar:
+			number_colliding_bodies += 1
 			takeDamage()
 		else:
 			vignette.on_game_over()
 			died.emit()
 	
-	if other_area is Lever:
-		other_area.pull_lever()
+	if other_body is Lever:
+		other_body.pull_lever()
 
 
 func takeDamage():
+	if number_colliding_bodies == 0 || !damage_interval_timer.is_stopped() || !health_component:
+		return
+	
 	if (health_component.current_health <= 0):
 		vignette.on_game_over()
 		died.emit()
 	else:
 		health_component.damage(1)
 		vignette.on_player_damaged()
-		invincible = true
-		await get_tree().create_timer(1).timeout
-		invincible = false
+		damage_interval_timer.start()
 
 
 func _physics_process(delta):
