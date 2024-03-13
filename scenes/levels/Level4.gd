@@ -16,6 +16,7 @@ func _ready():
 	
 	var start_text_instance = full_screen_text_ui_scene.instantiate() as FullScreenTextUI
 	start_text_instance.labelText = "Kill all Scientists!"
+	start_text_instance.pressKeylabelText = "Press [space] to start, [z] to attack"
 	add_child(start_text_instance)
 	start_text_instance.start.connect(on_start_level)
 
@@ -23,7 +24,7 @@ func _ready():
 	lift.level_up.connect(on_level_up)
 
 
-func _process(delta):
+func _process(_delta):
 	var enemies = get_tree().get_nodes_in_group("enemy").size()
 	if enemies == 0:
 		if !levelClear:

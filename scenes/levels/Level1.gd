@@ -92,7 +92,8 @@ func tween_method(newPositionX: float, shuriken: Shuriken):
 
 
 func onPullLever():
-	finish()
+	if !levelClear:
+		finish()
 
 
 func finish():

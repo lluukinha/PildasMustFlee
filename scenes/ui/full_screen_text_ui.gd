@@ -12,7 +12,6 @@ signal start
 func _ready():
 	level_description_label.text = labelText
 	press_any_key_label.text = pressKeylabelText
-	pressKeylabelText
 	get_tree().paused = true
 
 

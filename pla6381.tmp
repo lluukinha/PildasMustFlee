@@ -1,7 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bcjmjkd0qgnok"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_wh2cd"]
-[ext_resource type="Texture2D" uid="uid://6skxsei2jaak" path="res://sprites/walking_player.png" id="2_ya0tt"]
 [ext_resource type="PackedScene" uid="uid://cacv685tn8dx5" path="res://scenes/manager/PowerUpManager.tscn" id="3_l2d8r"]
 [ext_resource type="Resource" uid="uid://j84qv01213ye" path="res://powerups/double_jump.tres" id="4_dcsue"]
 

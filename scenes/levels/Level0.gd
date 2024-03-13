@@ -3,7 +3,7 @@ extends Node2D
 @onready var lift: Lift = %Lift
 @onready var time_counter: TimeCounter = $TimeCounter
 @onready var camera_animation: AnimationPlayer = $CameraAnimation
-@onready var player: Player = $Foreground/Player
+@onready var player = $Foreground/Player
 
 const floor_clear_scene = preload("res://scenes/ui/floor_clear.tscn")
 const full_screen_text_ui_scene = preload("res://scenes/ui/full_screen_text_ui.tscn")
@@ -13,6 +13,11 @@ func _ready():
 	player.visible = false
 	player.canMove = false
 	get_tree().call_group("enemy", "stopMovement")
+	
+	var powerUpsCount = GameEvents.playerPowerUps.size()
+	if powerUpsCount < 2:
+		%BasicEnemy3.queue_free()
+		%BasicEnemy4.queue_free()
 	
 	var start_text_instance = full_screen_text_ui_scene.instantiate() as FullScreenTextUI
 	start_text_instance.labelText = "Survive for 10 seconds!"

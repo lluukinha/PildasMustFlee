@@ -1,7 +1,6 @@
 extends CharacterBody2D
 class_name BasicEnemy
 
-@onready var velocity_component = $VelocityComponent
 @onready var visuals = $Visuals
 @onready var animated_sprite_2d: AnimatedSprite2D = $Visuals/AnimatedSprite2D
 @onready var health_component: HealthComponent = $HealthComponent

@@ -16,7 +16,7 @@ func _ready():
 	area_2d.body_exited.connect(on_body_exited)
 
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("UP") && can_enter:
 		close_and_transitionate()
 

@@ -1,7 +1,6 @@
-[gd_scene load_steps=30 format=3 uid="uid://bcjmjkd0qgnok"]
+[gd_scene load_steps=26 format=3 uid="uid://bcjmjkd0qgnok"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_wh2cd"]
-[ext_resource type="Texture2D" uid="uid://6skxsei2jaak" path="res://sprites/walking_player.png" id="2_ya0tt"]
 [ext_resource type="PackedScene" uid="uid://b0rct3o4hlgke" path="res://scenes/ui/vignette.tscn" id="3_ef81l"]
 [ext_resource type="PackedScene" uid="uid://cacv685tn8dx5" path="res://scenes/manager/PowerUpManager.tscn" id="3_l2d8r"]
 [ext_resource type="Texture2D" uid="uid://bpucx7emsmr6w" path="res://sprites/player.png" id="5_5vws1"]
@@ -10,19 +9,19 @@
 [ext_resource type="PackedScene" uid="uid://d008ahfuqiv0d" path="res://scenes/ui/hud.tscn" id="7_kn4hl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_imtax"]
-atlas = ExtResource("2_ya0tt")
+atlas = ExtResource("5_5vws1")
 region = Rect2(251, 424, 61, 106)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_adiei"]
-atlas = ExtResource("2_ya0tt")
+atlas = ExtResource("5_5vws1")
 region = Rect2(253, 424, 61, 106)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_538lh"]
-atlas = ExtResource("2_ya0tt")
+atlas = ExtResource("5_5vws1")
 region = Rect2(378, 424, 60, 106)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_drxbd"]
-atlas = ExtResource("2_ya0tt")
+atlas = ExtResource("5_5vws1")
 region = Rect2(314, 424, 61, 106)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3yia7"]
@@ -162,19 +161,6 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q3u1g"]
 
-[sub_resource type="Animation" id="Animation_xlsby"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_fsco0"]
-resource_name = "punch"
-length = 0.2
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_oiwoy"]
-_data = {
-"RESET": SubResource("Animation_xlsby"),
-"punch": SubResource("Animation_fsco0")
-}
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_2wubg"]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
@@ -198,6 +184,7 @@ one_shot = true
 [node name="PowerUpControllers" type="Node2D" parent="." groups=["power_up_controllers"]]
 
 [node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="AngryBodyAnimation" type="AnimatedSprite2D" parent="Visuals"]
 unique_name_in_owner = true
@@ -219,11 +206,6 @@ offset = Vector2(0, -47)
 position = Vector2(1, -44)
 scale = Vector2(2.23937, 3.99719)
 shape = SubResource("RectangleShape2D_q3u1g")
-
-[node name="AttackAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_oiwoy")
-}
 
 [node name="EnemyHurtboxArea" type="Area2D" parent="."]
 unique_name_in_owner = true

@@ -15,8 +15,6 @@ const FIST_SCENE = preload("res://scenes/powerups/fist.tscn")
 
 @onready var damage_interval_timer: Timer = $DamageIntervalTimer
 @onready var power_up_manager: PowerUpManager = %PowerUpManager
-@onready var fist: Sprite2D = $Visuals/fist
-@onready var attack_animation: AnimationPlayer = $AttackAnimation
 @onready var visuals: Node2D = %Visuals
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var enemy_hurtbox_area: Area2D = %EnemyHurtboxArea
@@ -47,13 +45,22 @@ var canDash = false
 var canAttack = false
 var canUseHealthBar = false
 
-var invincible = false
-
 func _ready():
-	body_animation = normal_body_animation
-	angry_body_animation.visible = false
-	aberration_body_animation.visible = false
-	hud.visible = false
+	var powerUpsCount = GameEvents.playerPowerUps.size()
+	if powerUpsCount == 3:
+		body_animation = angry_body_animation
+		normal_body_animation.visible = false
+		aberration_body_animation.visible = false
+	else:
+		body_animation = normal_body_animation
+		angry_body_animation.visible = false
+		aberration_body_animation.visible = false
+	
+	if powerUpsCount > 2:
+		hud.visible = true
+	else:
+		hud.visible = false
+	
 	loadPowerUps()
 	enemy_hurtbox_area.body_entered.connect(on_body_entered)
 	enemy_hurtbox_area.body_exited.connect(on_body_exited)
@@ -120,9 +127,6 @@ func handle_keys_pressed():
 	# Handle attack
 	if canAttack && Input.is_action_just_pressed("Attack"):
 		attack()
-	
-	#if Input.is_action_just_pressed("Transform"):
-		#isTransformed = !isTransformed
 	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
